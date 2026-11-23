@@ -233,6 +233,9 @@ def enc_load(path, pw):
 def build(args):
     pw = os.environ.get(args.key_env) if args.key_env else None
     if args.key_env and not pw: sys.exit(f"Set the {args.key_env} environment variable to the dashboard password")
+    if args.print_delivered_ids:
+        st = (enc_load(args.state, pw) if pw else json.load(open(args.state))) if args.state and os.path.exists(args.state) else {}
+        print(json.dumps(sorted(int(k) for k in st.get("delivered", {})))); return
     global REF_NAMES
     if args.ref: REF_NAMES = tuple(x.strip().upper() for x in args.ref.split(","))
     seen, loads = set(), []
@@ -402,11 +405,12 @@ def write_xlsx(state, path):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--nexus", required=True); ap.add_argument("--itracker"); ap.add_argument("--carrier")
-    ap.add_argument("--state"); ap.add_argument("--out-state", required=True); ap.add_argument("--out-xlsx"); ap.add_argument("--out-json")
+    ap.add_argument("--nexus"); ap.add_argument("--itracker"); ap.add_argument("--carrier")
+    ap.add_argument("--state"); ap.add_argument("--out-state"); ap.add_argument("--out-xlsx"); ap.add_argument("--out-json")
     ap.add_argument("--modes", help="comma list of modes to include, e.g. FTL")
     ap.add_argument("--ref", help="reference type name(s) shown in the PO column, e.g. 'DHL Shipment ID'")
     ap.add_argument("--delivered-hours", type=float, help="only keep delivered loads completed within this many hours")
+    ap.add_argument("--print-delivered-ids", action="store_true", help="print the delivered load ids already kept in --state, then exit")
     ap.add_argument("--keep-delivered", action="store_true", help="keep every delivered load in state until it leaves Nexus' delivered status")
     ap.add_argument("--delivered-ids", help="JSON list of load ids currently DELIVERED in Nexus (prunes released loads)")
     ap.add_argument("--key-env", help="name of the env var holding the dashboard password; encrypts --out-json and the state file")
