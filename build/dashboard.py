@@ -31,7 +31,7 @@ STATE_TZ = {
  'SC':'America/New_York','SD':'America/Chicago','TN':'America/Chicago','TX':'America/Chicago','UT':'America/Denver',
  'VT':'America/New_York','VA':'America/New_York','WA':'America/Los_Angeles','WV':'America/New_York','WI':'America/Chicago',
  'WY':'America/Denver','ON':'America/Toronto','QC':'America/Toronto','BC':'America/Vancouver','AB':'America/Edmonton'}
-FTL_STATUS = {"COVERED":"Booked","DISPATCHED":"Dispatched","AT_PICKUP":"At Pickup","LOADED":"In Transit",
+FTL_STATUS = {"COVERED":"Dispatched","DISPATCHED":"Dispatched","AT_PICKUP":"At Pickup","LOADED":"In Transit",
  "IN_TRANSIT":"In Transit","AT_CONSIGNEE":"At Delivery","DELIVERED":"Delivered","CLAIM":"Delivered",
  "BLOCKED":"On Hold","ON_SITE":"At Delivery","DROPPED":"Delivered"}
 LTL_NEXUS_STATUS = {"COVERED":"Awaiting Pickup","DISPATCHED":"Awaiting Pickup","AT_PICKUP":"Awaiting Pickup",
